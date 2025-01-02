@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broma del Regal</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        video, img, audio {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        video#gift {
+            display: block; /* El primer vídeo está visible al comenzar */
+            object-fit: cover; /* Mantiene la proporción del video inicial */
+        }
+
+        /* Estilo para la imagen */
+        #photo {
+            display: none; /* Comienza oculta */
+            width: 150px; /* Tamaño reducido */
+            height: auto;
+            top: 50%; /* Centrado vertical */
+            left: 50%; /* Centrado horizontal */
+            transform: translate(-50%, -50%); /* Ajuste para que esté centrada correctamente */
+            cursor: pointer;
+            z-index: 1; /* Asegura que la imagen esté sobre el video */
+        }
+
+        /* Estilo para el video final (vertical) */
+        video#video {
+            display: none; /* Comienza oculto */
+            width: auto;
+            height: 100%; /* Altura al 100% para mantener el formato vertical */
+            max-width: 100%;
+            top: 50%; /* Centrado vertical */
+            left: 50%; /* Centrado horizontal */
+            transform: translate(-50%, -50%); /* Centrado correcto del video */
+            z-index: 0; /* Mantiene el video al fondo */
+        }
+
+        /* Imagen final grande */
+        #finalImage {
+            display: none; /* Comienza oculta */
+            width: 100%; /* Tamaño completo */
+            height: auto;
+            top: 0;
+            left: 0;
+            z-index: 2; /* Aparece sobre todo lo demás */
+        }
+
+        /* Música */
+        audio {
+            display: none; /* Oculta el reproductor */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Video inicial del regalo -->
+        <video id="gift" muted>
+            <source src="regal.mp4" type="video/mp4">
+            El teu navegador no suporta vídeos.
+        </video>
+        <!-- Imagen que aparece al final del video -->
+        <img id="photo" src="zapatillas.jpg" alt="Foto">
+        <!-- Video final (formato vertical) -->
+        <video id="video" controls>
+            <source src="broma.mp4" type="video/mp4">
+            El teu navegador no suporta vídeos.
+        </video>
+        <!-- Imagen final -->
+        <img id="finalImage" src="nadal.png" alt="Imagen final">
+        <!-- Música -->
+        <audio id="music" autoplay>
+            <source src="burrito.mp3" type="audio/mp3">
+            El teu navegador no suporta l'audio.
+        </audio>
+    </div>
+
+    <script>
+        // Selección de elementos
+        const gift = document.getElementById('gift');
+        const photo = document.getElementById('photo');
+        const video = document.getElementById('video');
+        const finalImage = document.getElementById('finalImage');
+        const music = document.getElementById('music');
+
+        // Al hacer clic en el primer video (regalo), se reproduce
+        gift.addEventListener('click', () => {
+            gift.play(); // Reproduce el video inicial
+        });
+
+        // Al terminar el primer video, mostrar la imagen
+        gift.addEventListener('ended', () => {
+            photo.style.display = 'block'; // Muestra la imagen
+        });
+
+        // Al hacer clic en la imagen, ocultarla y mostrar el video final
+        photo.addEventListener('click', () => {
+            photo.style.display = 'none'; // Oculta la imagen
+            video.style.display = 'block'; // Muestra el video final
+            video.play(); // Reproduce el video final
+        });
+
+        // Al terminar el video final, mostrar la imagen final y reproducir la música
+        video.addEventListener('ended', () => {
+            video.style.display = 'none'; // Oculta el video final
+            finalImage.style.display = 'block'; // Muestra la imagen final
+            music.play(); // Reproduce la música
+        });
+    </script>
+</body>
+</html>
